@@ -25,12 +25,12 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
-      working-directory: ./terraform
+      working-directory: ./terraform/initial-requirements
 
     - name: Terraform Plan
-      run: terraform plan -out=tfplan
-      working-directory: ./terraform
+      run: terraform plan -out=tfplan -var "bastion_username=${{ secrets.BASTION_USERNAME }}" -var "subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+      working-directory: ./terraform/initial-requirements
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var "resource_group_name=my_group" -var "bastion_username=${{ secrets.BASTION_USERNAME }}" -var "bastion_ssh_key=${{ secrets.BASTION_SSH_KEY }}" tfplan
-      working-directory: ./terraform
+      run: terraform apply -auto-approve tfplan
+      working-directory: ./terraform/initial-requirements

@@ -1,6 +1,7 @@
 variable "resource_group_name" {
   description = "Name of the Azure Resource Group"
   type        = string
+  default     = "happy-group"
 }
 
 variable "location" {
@@ -9,12 +10,12 @@ variable "location" {
   default     = "East US"
 }
 
-variable "bastion_username" {
-  description = "Username for the Bastion Host"
+variable "bastion_subnet_address_prefix" {
+  description = "Address prefix of the Bastion subnet"
   type        = string
 }
 
-variable "bastion_ssh_key" {
-  description = "SSH Key for the Bastion Host"
+variable "subnet_id" {
+  description = "Subnet ID for the Service"
   type        = string
 }

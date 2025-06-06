@@ -1,11 +1,29 @@
+# Initial Requirements
+## Architecture Diagram
+![img.png](images/initial-requirement.png)
+
+## Requirements
+- Build a Github Action CD pipeline that deploys that deploys modular Terraform code to Azure cloud
+- The Terraform code should provision a new network and a bastion host in that network that can be SSH’d into. Only allow the bastion host to access [PayPal.com](http://PayPal.com), and no other internet connection.
+- The Terraform code should also provision one more instance that can only be access by the Bastion host
+
+## Testing
+- Assure that all resource are provisioned with the terraform output command or the az resource list and check console
+- try and make a http request to the bastion host, should fail
+- ssh into the bastion host and try to make an http request to Paypal.com, should succeed
+- trying to access any other site should fail
+- ssh into the bastion host and then ssh into the second instance, should succeed
+- ssh into a dummy bastion host in the same subnet and try to ssh into the second instance, should fail
+
+# Expanded Requirements
 ## Dev Testing
-![img.png](../images/local-testing.png)
+![img.png](images/local-testing.png)
 
 ## Improved Fault Tolerance and Scalability
-![img_1.png](../images/fault-tolerance.png)
+![img_1.png](images/fault-tolerance.png)
 
 ## Special Release Workflow
-![img.png](../images/special-release.png)
+![img.png](images/special-release.png)
 
 ## Expanded Requirements
 - **Dev Testing** - we should have the option to boot up a test environment with 

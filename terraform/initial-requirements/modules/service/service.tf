@@ -11,7 +11,7 @@ resource "azurerm_network_security_group" "service" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22" # SSH Hopping or HTTPS port for API calls?
-    source_address_prefix      = azurerm_subnet.bastion.address_prefixes[0]
+    source_address_prefix      = var.bastion_subnet_address_prefix
     destination_address_prefix = "*"
   }
 }
@@ -21,9 +21,9 @@ resource "azurerm_linux_virtual_machine" "service" {
   resource_group_name = var.resource_group_name
   location            = var.location
   size                = "Standard_B1s"
-  admin_username      = var.bastion_username
+  admin_username      = "myuser"
   network_interface_ids = [
-    azurerm_network_interface.instance.id,
+    azurerm_network_interface.service.id,
   ]
 
   os_disk {
@@ -38,10 +38,6 @@ resource "azurerm_linux_virtual_machine" "service" {
     version   = "latest"
   }
 
-  admin_ssh_key {
-    username   = var.bastion_username
-    public_key = var.bastion_ssh_key
-  }
 }
 
 # provide the VM with an IP address within its Subnet
@@ -52,7 +48,7 @@ resource "azurerm_network_interface" "service" {
 
   ip_configuration {
     name                          = "service-ip-config"
-    subnet_id                     = azurerm_subnet.service.id
+    subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }

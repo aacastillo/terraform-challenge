@@ -51,7 +51,7 @@ resource "azurerm_linux_virtual_machine" "bastion" {
 
   admin_ssh_key {
     username   = var.bastion_username
-    public_key = var.bastion_ssh_key
+    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCtPk9gYXEWLc4E+mzSFDiyA3neq5dV3c5q+u0bYw90xZ3viGvpfto4XfJoKllhbzK3+ZBQOpkctuTcOkkMOoqQwxqKGZ5TJE7UgE6sMIMOz+RUeVnj7RVlsuOS9YJCWrNS4PBq6KeOMNfQbfxDb8aQfaT5EXOIIiNJ37zgP1Bg7ZvPgzl19iFP0xGStppKW2ID7W10Hcizm0+jcDUXBhL4+4LURHHrzSUkLdQdlgI+ahDLa2aCGvQUGTetdZVxswCstvJ1yaL6b739YX4USlu3TlOE9zldjzrwIGwY5ZiT9GOzVp/VClQMww1Rq9fWOSHSAcgEMLvn5CdceqryrMIXh3zb74Tf555Lzp3dY637RSWc1x+5lL2lRl/K0hQY0LM5PQfgbdvv71GVIgtVcoeJdAFfxZqL1mKTL94hqMAdKiW7257G4887i8XTH+dPGx7xOR95qszbKBcOHS5sAqzWS1kEu71eenvj/pG4rm0PgNAd6go3+tzrnVbr5K6ab352oTHxXOXZNH0Szkw1IHC1fh5dbRUOMQoE/v9CoC3tIVfwZYuaZ2QytOktnrm1AIWogiFV08OzrMZQGkCOEgHux/dLkMyVgkl28NmNzuALNkcaMH42gOWS3jirHXwbED66sAK8AQxq25nZDthVGL3qhNJV+/DQtIA8hsNdZSywNQ== bastion-host-key"
   }
 }
 
@@ -62,7 +62,7 @@ resource "azurerm_network_interface" "bastion" {
 
   ip_configuration {
     name                          = "bastion-ip-config"
-    subnet_id                     = azurerm_subnet.bastion.id
+    subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
